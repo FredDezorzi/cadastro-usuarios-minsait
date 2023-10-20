@@ -19,6 +19,12 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 	
+	@Autowired
+	public UserService(UserRepository repository) {
+		
+		this.repository = repository;
+	}
+	
     // Method to retrieve a list of UserDTO objects.
 	public List<UserDTO> findAll(){
 		List<User> objs = new ArrayList<>();
@@ -26,7 +32,7 @@ public class UserService {
 		List<UserDTO> dtos = new ArrayList<>();
 
         for (User obj : objs) {
-        	UserDTO objDto = new UserDTO(obj.getName(), obj.getEmail(), obj.getBirthDay());
+        	UserDTO objDto = new UserDTO(obj.getId(),obj.getName(), obj.getEmail(), obj.getBirthDay());
             dtos.add(objDto);
         }
 		return dtos;
@@ -48,10 +54,10 @@ public class UserService {
 	
     // Method to delete a User by ID.
 	@Transactional
-	public void delete(Long id){
-		try{
+	public void delete(Long id) throws ResourceNotFoundException{
+		if(this.repository.existsById(id)){
 			this.repository.deleteById(id);
-		}catch (RuntimeException e) {
+		} else {
 			throw new ResourceNotFoundException(id);
 		}
 	}

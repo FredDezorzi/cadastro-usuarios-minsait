@@ -2,7 +2,6 @@ package com.example.demo.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -27,16 +28,18 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotBlank
 	private String name;
 	
-	@NotNull
+	@Email
+	@NotBlank
 	private String email;
 	
-	@NotNull
+	@NotBlank
 	private String password;
 	
 	// Apply date formatting for birthDay field
+	@NotNull	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date birthDay;
 	

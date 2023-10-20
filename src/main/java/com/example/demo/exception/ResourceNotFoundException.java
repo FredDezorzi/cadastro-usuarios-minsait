@@ -12,7 +12,7 @@ public class ResourceNotFoundException extends RuntimeException{
 
     // Constructor that accepts an object ID to include in the error message
 	public ResourceNotFoundException(Object id) {
-		super("Resource not found. Id " + id);
+		super("Not found User " + id);
 	}
 
 }

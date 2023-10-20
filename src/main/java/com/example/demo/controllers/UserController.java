@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entities.User;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.services.SucessMessage;
 import com.example.demo.services.UserService;
 
 @RestController
@@ -40,9 +42,10 @@ public class UserController {
 	
 	// Method to delete a user by ID, without using the DTO entity
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<String>delete(@PathVariable Long id){
+	public ResponseEntity<SucessMessage>delete(@PathVariable Long id) throws ResourceNotFoundException{
 		service.delete(id);
-		return ResponseEntity.ok().body("User " + id + " successfully deleted");
+		SucessMessage message = new SucessMessage("User " + id + " successfully deleted");
+		return ResponseEntity.ok(message);
 	}
 	
     // Method to insert a new user, having a DTO entity as return
